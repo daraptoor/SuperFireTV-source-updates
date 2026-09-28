@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SuperFire TV · Liquid Glass · All screens</title>
+<style>
+  :root {
+    --text: #F5F5F7;
+    --muted: rgba(235,235,245,.62);
+    --faint: rgba(235,235,245,.38);
+    --accent: #FFB340;
+    --blur: blur(30px) saturate(190%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0d; color: var(--text); padding: 48px 56px 80px;
+    font-family: -apple-system, "SF Pro Text", "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  header.page h1 { font-size: 34px; letter-spacing: -.8px; }
+  header.page p { color: var(--muted); font-size: 15px; margin-top: 8px; max-width: 900px; line-height: 1.5; }
+  section { margin-top: 56px; }
+  section > h2 { font-size: 13px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); margin-bottom: 22px; }
+  .screens { display: flex; flex-wrap: wrap; gap: 44px 40px; align-items: flex-start; }
+  figure { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  figcaption { font-size: 14px; font-weight: 600; }
+  figcaption small { display: block; text-align: center; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 3px; max-width: 360px; }
+
+  /* ---------- device ---------- */
+  .phone { width: 390px; height: 844px; border-radius: 54px; position: relative; overflow: hidden; flex: none;
+    box-shadow: 0 0 0 10px #1c1c1e, 0 0 0 11px #3a3a3c, 0 30px 70px rgba(0,0,0,.6); }
+  .phone.land { width: 844px; height: 390px; }
+  .wall { position: absolute; inset: 0;
+    background:
+      radial-gradient(70% 40% at 0% 0%, rgba(120,80,255,.28), transparent 70%),
+      radial-gradient(60% 35% at 100% 45%, rgba(255,140,60,.18), transparent 70%),
+      radial-gradient(70% 40% at 30% 100%, rgba(40,160,255,.20), transparent 70%),
+      #07070a; }
+  .island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 120px; height: 34px; background: #000; border-radius: 20px; z-index: 50; }
+  .status { position: absolute; top: 0; left: 0; right: 0; height: 50px; display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 34px 0; font-size: 15px; font-weight: 600; z-index: 49; }
+  .home-ind { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 134px; height: 5px; border-radius: 3px; background: rgba(255,255,255,.85); z-index: 60; }
+
+  /* ---------- glass recipe ---------- */
+  .glass { background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.06));
+    backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: .5px solid rgba(255,255,255,.20);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(255,255,255,.05), 0 10px 30px rgba(0,0,0,.30); }
+  .glass.thick { background: linear-gradient(180deg, rgba(58,58,66,.72), rgba(30,30,36,.78)); }
+  .on-glass { background: rgba(255,255,255,.20); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); color: #fff; }
+  svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  /* ---------- browse chrome ---------- */
+  .top { position: absolute; top: 54px; left: 14px; right: 14px; z-index: 20; display: flex; gap: 8px; align-items: center; }
+  .title-pill { height: 48px; border-radius: 24px; padding: 0 16px 0 9px; display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 18px; letter-spacing: -.3px; }
+  .app-icon { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(145deg, #ffcf6b, #ff5a1f); position: relative; box-shadow: inset 0 1px 0 rgba(255,255,255,.55); }
+  .app-icon::after { content: ""; position: absolute; left: 10px; top: 6px; width: 10px; height: 16px; border-radius: 50% 50% 45% 45%; background: rgba(255,255,255,.9); clip-path: polygon(50% 0, 100% 60%, 80% 100%, 20% 100%, 0 60%); }
+  .spacer { flex: 1; }
+  .ibtn { width: 48px; height: 48px; border-radius: 24px; display: flex; align-items: center; justify-content: center; position: relative; color: var(--text); flex: none; }
+  .ibtn.active { color: var(--accent); }
+  .ibtn .dot { position: absolute; top: 11px; right: 11px; width: 8px; height: 8px; border-radius: 4px; background: var(--accent); box-shadow: 0 0 0 2px rgba(20,20,24,.8); }
+  .searchbar { flex: 1; height: 48px; border-radius: 24px; display: flex; align-items: center; gap: 8px; padding: 0 6px 0 14px; font-size: 16px; }
+  .searchbar .q { flex: 1; }
+  .searchbar .caret { display: inline-block; width: 2px; height: 20px; background: var(--accent); vertical-align: -4px; margin-left: 1px; }
+  .searchbar .clear { width: 36px; height: 36px; border-radius: 18px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.14); }
+  .searchbar .clear svg { width: 14px; height: 14px; }
+
+  .seg { position: absolute; top: 112px; left: 14px; right: 14px; z-index: 20; height: 44px; border-radius: 22px; padding: 4px; display: flex; gap: 2px; }
+  .seg span { flex: 1; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .seg span.on { background: rgba(255,255,255,.22); color: var(--accent); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+
+  .meta { position: absolute; left: 22px; right: 22px; z-index: 19; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
+
+  .grid { position: absolute; left: 14px; right: 14px; display: grid; gap: 14px 10px; }
+  .scrollfade::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 120px; z-index: 18; pointer-events: none;
+    background: linear-gradient(180deg, rgba(7,7,10,.85), rgba(7,7,10,0)); }
+
+  .card .art { border-radius: 14px; position: relative; overflow: hidden; box-shadow: inset 0 0 0 .5px rgba(255,255,255,.14), 0 6px 18px rgba(0,0,0,.35); }
+  .card .art b { position: absolute; left: 9px; right: 9px; bottom: 9px; font-size: 13px; font-weight: 800; line-height: 1.02; letter-spacing: -.2px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,.45); }
+  .card .art .shine { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,.22), rgba(255,255,255,0) 40%); }
+  .card .name { font-size: 12px; font-weight: 600; margin-top: 7px; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card .name .star { color: var(--accent); }
+  .card .info { font-size: 11px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card .prog { position: absolute; left: 8px; right: 8px; bottom: 8px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.28); backdrop-filter: blur(8px); }
+  .card .prog i { display: block; height: 100%; border-radius: 2px; background: var(--accent); }
+  .card .prog.indet i { width: 35% !important; margin-left: 30%; opacity: .8; }
+  .card .chip { position: absolute; top: 7px; right: 7px; height: 22px; padding: 0 8px; border-radius: 11px; font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+  .card .chip svg { width: 11px; height: 11px; stroke-width: 2.6; }
+
+  .live .art { display: flex; align-items: center; justify-content: center; }
+  .live .logo { width: 54px; height: 54px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px; letter-spacing: -.5px; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.45); }
+  .live .info { font-weight: 600; }
+  .live .info::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 3px; background: currentColor; margin-right: 5px; vertical-align: 1px; }
+
+  .groupHead { grid-column: 1 / -1; font-size: 15px; font-weight: 700; letter-spacing: -.2px; margin-top: 4px; display: flex; gap: 6px; align-items: baseline; }
+  .groupHead span { font-size: 12px; font-weight: 500; color: var(--muted); }
+
+  .more { position: absolute; left: 50%; transform: translateX(-50%); z-index: 21; height: 40px; border-radius: 20px; padding: 0 16px; display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .more svg { width: 16px; height: 16px; }
+
+  .tabbar { position: absolute; left: 16px; right: 16px; bottom: 26px; z-index: 30; height: 62px; border-radius: 31px; display: flex; align-items: center; justify-content: space-between; padding: 0 7px; }
+  .tab { width: 46px; height: 48px; border-radius: 24px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.72); }
+  .tab svg { width: 22px; height: 22px; }
+  .tab.on { color: var(--accent); background: rgba(255,255,255,.16); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); width: auto; padding: 0 12px; gap: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+  .empty { position: absolute; left: 40px; right: 40px; top: 330px; text-align: center; z-index: 5; }
+  .empty .badge { width: 72px; height: 72px; border-radius: 24px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; color: var(--accent); }
+  .empty .badge svg { width: 30px; height: 30px; }
+  .empty h3 { font-size: 18px; letter-spacing: -.3px; }
+  .empty p { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+
+  .ptr { position: absolute; top: 172px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border-radius: 20px; z-index: 21; display: flex; align-items: center; justify-content: center; }
+  .spinner { width: 20px; height: 20px; border-radius: 10px; border: 2.5px solid rgba(255,255,255,.2); border-top-color: var(--accent); }
+
+  .keyboard { position: absolute; left: 0; right: 0; bottom: 0; height: 290px; z-index: 40; padding: 10px 4px 40px; background: rgba(40,40,46,.72); backdrop-filter: var(--blur); border-top: .5px solid rgba(255,255,255,.14); display: flex; flex-direction: column; gap: 11px; }
+  .keyboard .kr { display: flex; justify-content: center; gap: 6px; }
+  .keyboard .k { width: 33px; height: 42px; border-radius: 6px; background: rgba(255,255,255,.22); display: flex; align-items: center; justify-content: center; font-size: 19px; }
+  .keyboard .k.w { width: 190px; font-size: 14px; } .keyboard .k.m { width: 84px; font-size: 14px; background: rgba(255,255,255,.12); }
+  .keyboard .k.go { background: var(--accent); color: #000; font-weight: 700; }
+
+  .toast { position: absolute; left: 50%; bottom: 104px; transform: translateX(-50%); z-index: 45; height: 42px; border-radius: 21px; padding: 0 18px; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .toast svg { width: 16px; height: 16px; color: var(--accent); }
+
+  /* ---------- sheets ---------- */
+  .dim { position: absolute; inset: 0; z-index: 35; background: rgba(0,0,0,.42); }
+  .sheet { position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 40; border-radius: 40px; padding: 10px 18px 28px; }
+  .sheet .grab { width: 38px; height: 5px; border-radius: 3px; background: rgba(255,255,255,.35); margin: 0 auto 12px; }
+  .sh { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .sh .t { flex: 1; }
+  .sh h3 { font-size: 20px; letter-spacing: -.4px; line-height: 1.2; }
+  .sh p { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .x { width: 36px; height: 36px; border-radius: 18px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.14); flex: none; }
+  .x svg { width: 15px; height: 15px; }
+  .msg { font-size: 13px; color: var(--muted); line-height: 1.45; margin: -4px 0 14px; }
+  .list { border-radius: 22px; background: rgba(255,255,255,.07); overflow: hidden; }
+  .li { min-height: 50px; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; border-top: .5px solid rgba(255,255,255,.09); }
+  .li:first-child { border-top: 0; }
+  .li .lead { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex: none; color: #fff; }
+  .li .lead svg { width: 17px; height: 17px; }
+  .li .lbl { flex: 1; } .li .lbl small { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .li .val { color: var(--muted); font-size: 14px; }
+  .li .chev { color: var(--faint); } .li .chev svg { width: 15px; height: 15px; }
+  .li .check { color: var(--accent); } .li .check svg { width: 18px; height: 18px; stroke-width: 2.6; }
+  .li.danger { color: #ff6961; }
+  .li.sel { color: var(--accent); }
+  .toggle { width: 50px; height: 30px; border-radius: 15px; background: #34c759; position: relative; flex: none; }
+  .toggle::after { content: ""; position: absolute; right: 2px; top: 2px; width: 26px; height: 26px; border-radius: 13px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+  .toggle.off { background: rgba(255,255,255,.18); } .toggle.off::after { right: auto; left: 2px; }
+  .listlabel { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin: 16px 4px 7px; }
+  .actions { display: flex; gap: 8px; margin-top: 16px; }
+  .act { flex: 1; height: 50px; border-radius: 25px; display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 15px; font-weight: 600; background: rgba(255,255,255,.12); box-shadow: inset 0 1px 0 rgba(255,255,255,.18); white-space: nowrap; }
+  .act.primary { background: rgba(255,255,255,.94); color: #000; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+  .act.fav { color: var(--accent); }
+  .act svg { width: 17px; height: 17px; }
+  .detail { display: flex; gap: 14px; }
+  .detail .art { width: 104px; height: 154px; border-radius: 14px; flex: none; position: relative; overflow: hidden; box-shadow: 0 8px 22px rgba(0,0,0,.4); }
+  .detail .art b { position: absolute; left: 8px; bottom: 8px; right: 8px; font-size: 14px; font-weight: 800; text-transform: uppercase; }
+  .detail p { font-size: 13.5px; line-height: 1.5; color: rgba(235,235,245,.82); }
+  .eps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .eps span { height: 48px; border-radius: 16px; background: rgba(255,255,255,.10); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+  .eps span.watched { color: var(--muted); }
+  .eps span.now { background: rgba(255,179,64,.22); color: var(--accent); box-shadow: inset 0 0 0 1px rgba(255,179,64,.5); }
+  .stream { padding: 12px 16px; }
+  .stream .lbl { font-size: 14px; line-height: 1.35; }
+  .qtag { font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 7px; background: rgba(255,255,255,.16); margin-right: 6px; vertical-align: 1px; }
+  .loading { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 42px 0; color: var(--muted); font-size: 14px; }
+  .field { height: 52px; border-radius: 18px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,179,64,.55); display: flex; align-items: center; padding: 0 16px; font-size: 15px; color: var(--text); }
+  .field.err { box-shadow: inset 0 0 0 1px rgba(255,105,97,.7); }
+  .errtext { color: #ff6961; font-size: 12px; margin: 7px 4px 0; }
+  .center-dialog { position: absolute; left: 28px; right: 28px; top: 50%; transform: translateY(-50%); z-index: 40; border-radius: 34px; padding: 24px 20px 20px; text-align: center; }
+  .center-dialog .badge { width: 60px; height: 60px; border-radius: 20px; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; }
+  .center-dialog h3 { font-size: 19px; letter-spacing: -.3px; }
+  .center-dialog p { font-size: 13.5px; color: var(--muted); line-height: 1.45; margin-top: 6px; }
+  .center-dialog .bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,.14); margin: 16px 0 2px; overflow: hidden; }
+  .center-dialog .bar i { display: block; height: 100%; width: 46%; background: var(--accent); border-radius: 3px; }
+
+  /* ---------- player ---------- */
+  .video { position: absolute; inset: 0;
+    background:
+      radial-gradient(40% 70% at 70% 45%, rgba(255,160,70,.85), transparent 70%),
+      radial-gradient(35% 60% at 25% 60%, rgba(60,40,140,.9), transparent 70%),
+      linear-gradient(180deg, #1b1426, #3a1e14 60%, #0d0907); }
+  .video::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 38%; background: linear-gradient(180deg, transparent, rgba(40,20,10,.85)); clip-path: polygon(0 40%, 18% 22%, 36% 38%, 55% 12%, 74% 34%, 100% 18%, 100% 100%, 0 100%); }
+  .pshade-t { position: absolute; left: 0; right: 0; top: 0; height: 110px; background: linear-gradient(180deg, rgba(0,0,0,.55), transparent); }
+  .pshade-b { position: absolute; left: 0; right: 0; bottom: 0; height: 130px; background: linear-gradient(0deg, rgba(0,0,0,.55), transparent); }
+  .ptop { position: absolute; top: 18px; left: 56px; right: 56px; display: flex; align-items: center; gap: 10px; z-index: 5; }
+  .ptitle { flex: 1; min-width: 0; }
+  .ptitle h3 { font-size: 17px; letter-spacing: -.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ptitle p { font-size: 12px; color: rgba(255,255,255,.72); margin-top: 1px; }
+  .pstatus { height: 30px; border-radius: 15px; padding: 0 11px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .pstatus i { width: 7px; height: 7px; border-radius: 4px; background: #34c759; }
+  .pgroup { display: flex; border-radius: 24px; padding: 0 2px; }
+  .pgroup .ibtn { width: 46px; }
+  .pbottom { position: absolute; left: 56px; right: 56px; bottom: 16px; z-index: 5; height: 60px; border-radius: 30px; display: flex; align-items: center; gap: 4px; padding: 0 8px; }
+  .pplay { width: 46px; height: 46px; border-radius: 23px; background: rgba(255,255,255,.94); color: #000; display: flex; align-items: center; justify-content: center; flex: none; }
+  .pplay svg { fill: #000; stroke: none; width: 18px; height: 18px; }
+  .skip { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; position: relative; flex: none; }
+  .skip svg { width: 26px; height: 26px; stroke-width: 1.8; }
+  .skip em { position: absolute; font-size: 8.5px; font-weight: 800; font-style: normal; top: 17px; }
+  .timeline { flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,.22); position: relative; margin: 0 12px; }
+  .timeline .buf { position: absolute; left: 0; top: 0; bottom: 0; width: 58%; background: rgba(255,255,255,.35); border-radius: 3px; }
+  .timeline .pos { position: absolute; left: 0; top: 0; bottom: 0; width: 38%; background: #fff; border-radius: 3px; }
+  .timeline .thumb { position: absolute; left: 38%; top: 50%; width: 14px; height: 14px; border-radius: 7px; background: #fff; transform: translate(-50%,-50%); box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+  .ptime { font-size: 12px; font-variant-numeric: tabular-nums; color: rgba(255,255,255,.9); white-space: nowrap; margin-right: 6px; }
+  .pnext { height: 44px; border-radius: 22px; padding: 0 14px; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; background: rgba(255,255,255,.16); box-shadow: inset 0 1px 0 rgba(255,255,255,.25); white-space: nowrap; flex: none; }
+  .pnext svg { width: 15px; height: 15px; }
+  .level { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 168px; border-radius: 24px; z-index: 5; display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 10px; }
+  .level .track { flex: 1; width: 8px; border-radius: 4px; background: rgba(255,255,255,.2); position: relative; overflow: hidden; }
+  .level .track i { position: absolute; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 4px; }
+  .level svg { width: 18px; height: 18px; }
+  .psheet { position: absolute; right: 16px; bottom: 16px; top: 16px; width: 360px; z-index: 40; border-radius: 34px; padding: 18px 16px 16px; overflow: hidden; }
+  .psheet .li { min-height: 46px; font-size: 14px; }
+  .livebadge { background: #ff3b30; color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .5px; padding: 3px 8px; border-radius: 7px; }
+
+  /* ---------- widget page ---------- */
+  .wpage { position: absolute; top: 54px; left: 14px; right: 14px; bottom: 0; z-index: 10; }
+  .whead { display: flex; align-items: center; gap: 10px; }
+  .whead h3 { flex: 1; font-size: 24px; letter-spacing: -.5px; }
+  .pillbtn { height: 40px; border-radius: 20px; padding: 0 16px; display: flex; align-items: center; font-size: 14px; font-weight: 600; }
+  .preview { height: 150px; border-radius: 28px; margin-top: 14px; position: relative; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(60% 90% at 30% 20%, #5b3fd9, transparent), radial-gradient(60% 90% at 90% 90%, #0aa4ff, transparent), #151528; }
+  .preview .wid { width: 92px; height: 92px; border-radius: 26px; display: flex; align-items: center; justify-content: center; }
+  .preview .wid .app-icon { width: 54px; height: 54px; border-radius: 16px; box-shadow: 0 0 28px rgba(255,140,50,.7); }
+  .preview .wid .app-icon::after { left: 18px; top: 11px; width: 18px; height: 28px; }
+  .preview small { position: absolute; top: 12px; left: 16px; font-size: 10px; font-weight: 700; letter-spacing: 1.2px; color: rgba(255,255,255,.8); }
+  .slider { padding: 11px 16px 14px; }
+  .slider .row { display: flex; justify-content: space-between; font-size: 14px; }
+  .slider .row span { color: var(--muted); }
+  .slider .rail { height: 6px; border-radius: 3px; background: rgba(255,255,255,.16); margin-top: 12px; position: relative; }
+  .slider .rail i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: var(--accent); }
+  .slider .rail b { position: absolute; top: 50%; width: 24px; height: 24px; border-radius: 12px; background: #fff; transform: translate(-50%,-50%); box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+  .styleseg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px; }
+  .styleseg span { height: 44px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .styleseg span.on { background: rgba(255,255,255,.2); color: var(--accent); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); }
+  .swatches { display: flex; gap: 10px; padding: 12px 16px; }
+  .swatches i { width: 30px; height: 30px; border-radius: 15px; box-shadow: inset 0 0 0 .5px rgba(255,255,255,.3); }
+  .swatches i.on { box-shadow: 0 0 0 2px #0a0a0d, 0 0 0 4px var(--accent); }
+  .savebar { position: absolute; left: 0; right: 0; bottom: 30px; height: 54px; border-radius: 27px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; background: rgba(255,255,255,.94); color: #000; z-index: 12; }
+
+  /* ---------- notes ---------- */
+  .notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 1240px; }
+  .note { border-radius: 22px; padding: 18px 20px; background: rgba(255,255,255,.05); border: .5px solid rgba(255,255,255,.1); }
+  .note b { display: block; font-size: 14px; margin-bottom: 6px; }
+  .note p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>SuperFire TV · Liquid Glass</h1>
+  <p>Every phone screen, sheet and the player, redesigned with clear Apple‑style glass. All existing elements are kept; only their position, grouping and styling change. Posters, channels and titles are placeholders. The TV interface is not included and stays as it is.</p>
+</header>
+
+<section>
+  <h2>How the new style works</h2>
+  <div class="notes">
+    <div class="note"><b>Clear, neutral glass</b><p>A light white tint (6–15%) with blur and extra saturation replaces the purple and amber gradients. Content colour shows through, and a 1‑dp bright top edge makes it look like glass.</p></div>
+    <div class="note"><b>Floating controls</b><p>The header is split into a title pill and round icon buttons. The 7‑icon tab bar floats at the bottom and the grid scrolls underneath. The selected tab also shows its name.</p></div>
+    <div class="note"><b>Bottom sheets instead of dialogs</b><p>Details, options, filters, sources, settings and quality pickers become grouped‑list sheets, like iOS. The main action is a solid white pill and amber is kept for selections.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>1 · Browse sections (bottom tab bar)</h2>
+  <div class="screens" id="browse"></div>
+</section>
+
+<section>
+  <h2>2 · Search, refresh &amp; empty states</h2>
+  <div class="screens" id="states"></div>
+</section>
+
+<section>
+  <h2>3 · Title details flow</h2>
+  <div class="screens" id="details"></div>
+</section>
+
+<section>
+  <h2>4 · Options, filters, sources &amp; downloads</h2>
+  <div class="screens" id="sheets"></div>
+</section>
+
+<section>
+  <h2>5 · Settings</h2>
+  <div class="screens" id="settings"></div>
+</section>
+
+<section>
+  <h2>6 · Player (landscape)</h2>
+  <div class="screens" id="player"></div>
+</section>
+
+<script>
+/* ---------- icons ---------- */
+const I = {
+  fav: '<svg viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.2-6.5 4.2v-16a1 1 0 0 1 1-1z"/></svg>',
+  live: '<svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="m8.5 2.5 3.5 3.5 3.5-3.5"/></svg>',
+  movies: '<svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 3.5v17M16 3.5v17M3.5 9h4.5M3.5 15h4.5M16 9h4.5M16 15h4.5"/></svg>',
+  series: '<svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="13" rx="3"/><path d="M6 4.5h12M8.5 1.8h7"/></svg>',
+  downloads: '<svg viewBox="0 0 24 24"><path d="M12 3.5v11m0 0-4.5-4.5M12 14.5l4.5-4.5M4.5 16.5v1.5a2.5 2.5 0 0 0 2.5 2.5h10a2.5 2.5 0 0 0 2.5-2.5v-1.5"/></svg>',
+  cont: '<svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4v4.5H8"/><path d="M12 7.5V12l3 2"/></svg>',
+  settings: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  search: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>',
+  filter: '<svg viewBox="0 0 24 24"><path d="M4 6.5h16M7 12h10M10 17.5h4"/></svg>',
+  more: '<svg viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18.5" cy="12" r="1.2"/></svg>',
+  back: '<svg viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></svg>',
+  close: '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  chev: '<svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>',
+  check: '<svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  play: '<svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M7 4.5v15l13-7.5z"/></svg>',
+  pause: '<svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" style="stroke-width:3.4"/></svg>',
+  star: '<svg viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg>',
+  starFill: '<svg viewBox="0 0 24 24" style="fill:currentColor"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg>',
+  source: '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7.5" ry="2.8"/><path d="M4.5 6v6c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8V6M4.5 12v6c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-6"/></svg>',
+  trash: '<svg viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></svg>',
+  rewind: '<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v4.3h4.3"/></svg>',
+  forward: '<svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4.5v4.3h-4.3"/></svg>',
+  next: '<svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M5 5v14l10-7zM16.5 5h2.5v14h-2.5z"/></svg>',
+  aspect: '<svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M6.5 10V9h2M17.5 14v1h-2"/></svg>',
+  sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>',
+  vol: '<svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
+  cc: '<svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M10 10.2a2.3 2.3 0 1 0 0 3.6M17 10.2a2.3 2.3 0 1 0 0 3.6"/></svg>',
+  quality: '<svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M7 9.5v5M10 9.5v5M7 12h3M13.5 9.5v5h1.8a2.5 2.5 0 0 0 0-5z"/></svg>',
+  speed: '<svg viewBox="0 0 24 24"><path d="M4 17a8 8 0 1 1 16 0"/><path d="m12 17 4-5"/></svg>',
+  touch: '<svg viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V12m0-1a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-.5a6 6 0 0 1-4.6-2.2L4.4 16a1.6 1.6 0 0 1 2.4-2l2.2 2"/></svg>',
+  auto: '<svg viewBox="0 0 24 24"><path d="M5 5v14l10-7zM17 5v14"/></svg>',
+  playlist: '<svg viewBox="0 0 24 24"><path d="M4 6h11M4 11h11M4 16h7M17 13.5v7l4.5-3.5z"/></svg>',
+  flag: '<svg viewBox="0 0 24 24"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>',
+  demo: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 9 5 3-5 3z"/></svg>',
+  info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.5v.2"/></svg>',
+  layout: '<svg viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="17" rx="3"/><path d="M3 9h18M10 9v11.5"/></svg>',
+  widget: '<svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><path d="M17 13.5v7M13.5 17h7"/></svg>',
+  brush: '<svg viewBox="0 0 24 24"><path d="M14.5 4.5 19.5 9.5 11 18l-5-5z"/><path d="M6 13c-2 0-3 1.5-3 3.5V20h3.5C8.5 20 10 19 10 17"/></svg>',
+  update: '<svg viewBox="0 0 24 24"><path d="M12 3.5v10m0 0-4-4m4 4 4-4"/><path d="M5 15.5V18a2.5 2.5 0 0 0 2.5 2.5h9A2.5 2.5 0 0 0 19 18v-2.5"/></svg>',
+  plus: '<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  alert: '<svg viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5M12 17.2v.2"/></svg>',
+  exit: '<svg viewBox="0 0 24 24"><path d="M14 4.5h4a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5h-4M10 8l-4 4 4 4M6 12h10"/></svg>',
+  pauseSm: '<svg viewBox="0 0 24 24"><path d="M9 6v12M15 6v12" style="stroke-width:2.8"/></svg>',
+  wifi: '<svg viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.3a9.5 9.5 0 0 1 13 0M8.5 15.6a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r=".8"/></svg>',
+};
+
+/* ---------- art ---------- */
+const grads = [
+  ['#ff5f6d','#ffc371'], ['#0f2027','#4ca1af'], ['#8e2de2','#4a00e0'], ['#11998e','#38ef7d'],
+  ['#232526','#b21f1f'], ['#fc466b','#3f5efb'], ['#f7971e','#ffd200'], ['#1d2b64','#f8cdda'],
+  ['#42275a','#734b6d'], ['#134e5e','#71b280'], ['#e53935','#35162e'], ['#2c3e50','#fd746c'],
+];
+const accents = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FECA57','#A29BFE','#FF9F43','#55EFC4','#FD79A8','#74B9FF'];
+const hash = s => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+const art = s => { const g = grads[hash(s) % grads.length]; return `background:linear-gradient(155deg,${g[0]},${g[1]})`; };
+const acc = s => accents[hash(s) % accents.length];
+
+function poster(t, o = {}) {
+  const h = o.h || 150;
+  const prog = o.progress != null ? `<div class="prog ${o.indet ? 'indet' : ''}"><i style="width:${o.progress}%"></i></div>` : '';
+  const chip = o.chip ? `<span class="chip glass">${o.chip}</span>` : '';
+  return `<div class="card"><div class="art" style="height:${h}px;${art(t)}"><div class="shine"></div>${chip}<b>${t.replace(/ /g, '<br>')}</b>${prog}</div>
+    <div class="name">${o.star ? '<span class="star">★ </span>' : ''}${t}</div><div class="info">${o.info || ''}</div></div>`;
+}
+function channel(name, group, o = {}) {
+  const c = acc(name); const ab = name.split(' ').map(w => w[0]).join('').slice(0, 3);
+  return `<div class="card live"><div class="art glass" style="height:${o.h || 86}px"><div class="logo" style="background:linear-gradient(145deg,${c},${c}99)">${ab}</div></div>
+    <div class="name">${o.star ? '<span class="star">★ </span>' : ''}${name}</div><div class="info" style="color:${c}">LIVE • ${group}</div></div>`;
+}
+
+/* ---------- chrome ---------- */
+const tabs = [['Favorites', I.fav], ['Live TV', I.live], ['Movies', I.movies], ['Series', I.series], ['Downloads', I.downloads], ['Continue', I.cont], ['Settings', I.settings]];
+const tabbar = active => `<div class="tabbar glass">${tabs.map(([n, ic]) => `<div class="tab ${n === active ? 'on' : ''}">${ic}${n === active ? n : ''}</div>`).join('')}</div>`;
+function topBar(title, o = {}) {
+  if (o.search) return `<div class="top">
+      <div class="ibtn glass">${I.back}</div>
+      <div class="searchbar glass">${I.search}<span class="q">${o.search}<span class="caret"></span></span><span class="clear">${I.close}</span></div>
+      ${o.filters ? `<div class="ibtn glass">${I.filter}</div>` : ''}<div class="ibtn glass">${I.more}</div></div>`;
+  return `<div class="top">
+      <div class="title-pill glass"><span class="app-icon"></span>${title}</div><div class="spacer"></div>
+      <div class="ibtn glass">${I.search}</div>
+      ${o.filters ? `<div class="ibtn glass ${o.filterActive ? 'active' : ''}">${I.filter}${o.filterActive ? '<span class="dot"></span>' : ''}</div>` : ''}
+      <div class="ibtn glass">${I.more}</div></div>`;
+}
+const statusBar = () => `<div class="island"></div><div class="status"><span>9:41</span><span style="display:flex;gap:6px;align-items:center">${I.wifi.replace('<svg', '<svg style="width:17px;height:17px"')}<span style="display:inline-block;width:25px;height:12px;border-radius:4px;border:1.5px solid rgba(255,255,255,.6);padding:1px"><i style="display:block;height:100%;width:78%;background:#fff;border-radius:2px"></i></span></span></div>`;
+const phone = (inner, cls = '') => `<div class="phone ${cls}"><div class="wall"></div>${cls.includes("land") ? "" : statusBar()}${inner}${cls.includes('land') ? '' : '<div class="home-ind"></div>'}</div>`;
+const fig = (screen, cap, note = '') => `<figure>${screen}<figcaption>${cap}${note ? `<small>${note}</small>` : ''}</figcaption></figure>`;
+const grid = (items, topPx, cols = 3) => `<div class="grid" style="top:${topPx}px;grid-template-columns:repeat(${cols},1fr)">${items.join('')}</div>`;
+const meta = (topPx, l, r = '') => `<div class="meta" style="top:${topPx}px"><span>${l}</span><span>${r}</span></div>`;
+
+/* ---------- data ---------- */
+const movies = [['Neon Drift', '2024'], ['Wild Green', '2023'], ['Red Signal', '2024'], ['Afterglow', '2022'], ['Monsoon Road', '2024'], ['Paper Tigers', '2021'], ['Salt City', '2023'], ['Night Shift', '2024'], ['Blue Hour', '2022'], ['Iron Coast', '2020'], ['Last Train', '2023'], ['Echo Park', '2024'], ['Solar Kid', '2022'], ['Dust Bowl', '2021'], ['Hill Station', '2024']];
+const series = [['Severance', '2022'], ['The Bear', '2022'], ['Panchayat', '2020'], ['Mirzapur', '2018'], ['Kota Factory', '2019'], ['Dark Waters', '2023'], ['Tides', '2024'], ['Cold Case', '2021'], ['Glass Hearts', '2023'], ['Station 9', '2024'], ['Riverdale', '2017'], ['Sky High', '2022']];
+const chans = [['Star Plus HD', 'HIN'], ['Aaj Tak', 'HIN'], ['NDTV India', 'HIN'], ['Zee TV', 'HIN'], ['Colors HD', 'HIN'], ['ABP News', 'HIN'], ['Sony SAB', 'HIN'], ['DD National', 'HIN'], ['Republic Bharat', 'HIN'], ['Sony Max', 'HIN'], ['Zee Cinema', 'HIN'], ['India TV', 'HIN'], ['Star Gold', 'HIN'], ['News18 India', 'HIN'], ['Sun TV', 'HIN']];
+
+/* ---------- 1 · browse ---------- */
+const B = [];
+B.push(fig(phone(
+  topBar('Favorites') +
+  `<div class="seg glass"><span class="on">All</span><span>TV</span><span>Movies</span><span>Series</span></div>` +
+  grid([
+    `<div class="groupHead">Live TV <span>3</span></div>`,
+    channel('Star Plus HD', 'HIN', { star: 1, h: 80 }), channel('Aaj Tak', 'HIN', { star: 1, h: 80 }), channel('Sun TV', 'TAM', { star: 1, h: 80 }),
+    `<div class="groupHead">Movies &amp; Series <span>6</span></div>`,
+    poster('Neon Drift', { star: 1, info: 'Movie · 2024', h: 132 }), poster('Severance', { star: 1, info: 'Series · 2022', h: 132 }), poster('Afterglow', { star: 1, info: 'Movie · 2022', h: 132 }),
+    poster('The Bear', { star: 1, info: 'Series · 2022', h: 132 }), poster('Salt City', { star: 1, info: 'Movie · 2023', h: 132 }), poster('Panchayat', { star: 1, info: 'Series · 2020', h: 132 }),
+  ], 168) + tabbar('Favorites')),
+  'Favorites', 'The category tabs become one segmented control. The "Live TV" and "Movies & Series" group headings stay.'));
+
+B.push(fig(phone(
+  topBar('Live TV', { filters: 1 }) + meta(114, '248 channels', 'Group: HIN') +
+  grid(chans.map(([n, g], i) => channel(n, g, { star: i === 0 || i === 1 })), 140) + tabbar('Live TV')),
+  'Live TV', 'The filter button opens Channel groups. The channel count is shown under the header.'));
+
+B.push(fig(phone(
+  topBar('Movies', { filters: 1 }) + meta(114, '120 titles · All sources', '') +
+  grid(movies.slice(0, 12).map(([t, y], i) => poster(t, { info: y, star: i === 2 })), 140) +
+  `<div class="more glass" style="bottom:102px">${I.downloads.replace('<svg', '<svg style="transform:none"')}More results</div>` + tabbar('Movies')),
+  'Movies', 'The status line sits under the header. "More results ↓" becomes a floating pill at the end of the list.'));
+
+B.push(fig(phone(
+  topBar('Series', { filters: 1, filterActive: 1 }) + meta(114, '42 of 120 loaded titles', 'Filters on') +
+  grid(series.map(([t, y]) => poster(t, { info: y })), 140) +
+  `<div class="more glass" style="bottom:102px">${I.downloads}More results</div>` + tabbar('Series')),
+  'Series · filters active', 'An amber dot on the filter button shows that filters are on.'));
+
+B.push(fig(phone(
+  topBar('Downloads') + meta(114, '5 titles', 'Available offline') +
+  grid([
+    poster('Neon Drift', { info: 'Downloaded', chip: I.check + '1080p' }),
+    poster('Severance', { info: 'Downloading · 64%', progress: 64 }),
+    poster('Monsoon Road', { info: 'Paused', progress: 22 }),
+    poster('The Bear', { info: 'Queued', progress: 0, indet: 1 }),
+    poster('Iron Coast', { info: '<span style="color:#ff6961">Download failed</span>' }),
+  ], 140) + tabbar('Downloads')),
+  'Downloads', 'Download state and progress show on each card. Tapping a card opens its download actions.'));
+
+B.push(fig(phone(
+  topBar('Continue') + meta(114, '6 titles', '') +
+  grid([
+    poster('Severance', { info: 'S2 E4 · 31 min · 62%', progress: 62 }),
+    poster('Neon Drift', { info: '48 min · 35%', progress: 35 }),
+    poster('The Bear', { info: 'S3 E2 · 12 min · 40%', progress: 40 }),
+    poster('Salt City', { info: '96 min · 81%', progress: 81 }),
+    poster('Panchayat', { info: 'S1 E6 · 8 min · 22%', progress: 22 }),
+    poster('Blue Hour', { info: '15 min · 12%', progress: 12 }),
+  ], 140) + tabbar('Continue')),
+  'Continue Watching', 'An amber progress bar sits on the poster and the time watched is shown underneath.'));
+document.getElementById('browse').innerHTML = B.join('');
+
+/* ---------- 2 · states ---------- */
+const kb = `<div class="keyboard">${['qwertyuiop', 'asdfghjkl', 'zxcvbnm'].map((r, i) => `<div class="kr">${i === 2 ? '<span class="k m" style="width:44px">⇧</span>' : ''}${[...r].map(c => `<span class="k">${c}</span>`).join('')}${i === 2 ? '<span class="k m" style="width:44px">⌫</span>' : ''}</div>`).join('')}<div class="kr"><span class="k m">123</span><span class="k w">space</span><span class="k m go">search</span></div></div>`;
+const S = [];
+S.push(fig(phone(
+  topBar('', { search: 'night', filters: 1 }) + meta(114, '8 titles · All sources', '') +
+  grid([poster('Night Shift', { info: '2024' }), poster('Night Owls', { info: '2021' }), poster('Midnight Run', { info: '2019' }), poster('Nightfall', { info: '2023' }), poster('Knight Rider', { info: '1982' }), poster('Night Bus', { info: '2020' })], 140) + kb),
+  'Search open', 'Tapping search turns the title pill into a search field with Back and Clear. Filters and Options stay.'));
+
+S.push(fig(phone(
+  topBar('Movies', { filters: 1 }) + `<div class="ptr glass"><div class="spinner"></div></div>` + meta(114, 'Refreshing catalog…', '') +
+  `<div style="position:absolute;inset:0;transform:translateY(58px)">${grid(movies.slice(3, 12).map(([t, y]) => poster(t, { info: y })), 162)}</div>` + tabbar('Movies')),
+  'Pull to refresh', 'Pull‑to‑refresh on Movies and Series shows a glass spinner with an amber arc.'));
+
+S.push(fig(phone(
+  topBar('Favorites') + `<div class="seg glass"><span class="on">All</span><span>TV</span><span>Movies</span><span>Series</span></div>` +
+  `<div class="empty"><div class="badge glass">${I.fav}</div><h3>Your favorites will live here.</h3><p>Open a channel or title and choose Save favorite.</p></div>` + tabbar('Favorites')),
+  'Empty state', 'Each empty or error message gets a glass icon above it. The wording stays the same.'));
+
+S.push(fig(phone(
+  topBar('Movies', { filters: 1 }) + meta(114, '120 titles · All sources', '') +
+  grid(movies.slice(0, 12).map(([t, y], i) => poster(t, { info: y, star: i === 4 })), 140) +
+  `<div class="toast glass">${I.starFill}Added to favorites</div>` + tabbar('Movies')),
+  'Long‑press → favorite', 'Toasts such as "Added to favorites" and "Download resumed" become glass pills above the tab bar.'));
+
+S.push(fig(phone(
+  topBar('Favorites') + grid(movies.slice(0, 9).map(([t, y]) => poster(t, { info: y })), 168) +
+  `<div class="dim"></div><div class="center-dialog glass thick"><div class="badge" style="background:rgba(255,255,255,.12)">${I.exit}</div><h3>Leave SuperFire TV?</h3>
+  <div class="actions"><span class="act">Stay</span><span class="act primary">Exit</span></div></div>`),
+  'Exit confirmation', 'Short confirmations stay centred on screen.'));
+document.getElementById('states').innerHTML = S.join('');
+
+/* ---------- 3 · details ---------- */
+const bgGrid = grid(movies.slice(0, 12).map(([t, y]) => poster(t, { info: y })), 140) + topBar('Movies', { filters: 1 });
+const sheet = (inner) => `<div class="dim"></div><div class="sheet glass thick"><div class="grab"></div>${inner}</div>`;
+const sh = (t, sub = '') => `<div class="sh"><div class="t"><h3>${t}</h3>${sub ? `<p>${sub}</p>` : ''}</div><span class="x">${I.close}</span></div>`;
+const D = [];
+D.push(fig(phone(bgGrid + sheet(sh('Neon Drift', '2024  •  Movie') + `<div class="loading"><div class="spinner"></div>Fetching details…</div>`)),
+  'Loading details', 'A spinner with the message, inside the same sheet.'));
+D.push(fig(phone(bgGrid + sheet(sh('Neon Drift', '2024  •  Movie') +
+  `<div class="detail"><div class="art" style="${art('Neon Drift')}"><b>Neon<br>Drift</b></div><p>A getaway driver in a rain‑soaked megacity takes one last job, only to find the package in her trunk is a runaway AI that knows every road in the city. The two have one night to outrun a syndicate that wants it back.</p></div>
+  <div class="actions"><span class="act fav">${I.star}Favorite</span><span class="act">${I.downloads}Download</span><span class="act primary">${I.play}Watch</span></div>`)),
+  'Movie details', 'Poster, description, ☆ Favorite, Download and Watch. Watch is the solid white pill.'));
+D.push(fig(phone(bgGrid + sheet(sh('Severance', '2022  •  Series') +
+  `<div class="listlabel">Choose a season</div><div class="list">${[['1', 9], ['2', 10], ['3', 8]].map(([s, n]) => `<div class="li"><span class="lbl">Season ${s}<small>${n} episodes</small></span><span class="chev">${I.chev}</span></div>`).join('')}</div>
+  <div class="actions"><span class="act">${I.back}Back to details</span></div>`)),
+  'Series · seasons', 'Seasons become a grouped list, with "Back to details" at the bottom.'));
+D.push(fig(phone(bgGrid + sheet(sh('Severance', '2022  •  Series') +
+  `<div class="listlabel">Season 2  •  10 episodes</div><div class="eps">${Array.from({ length: 10 }, (_, i) => `<span class="${i < 3 ? 'watched' : i === 3 ? 'now' : ''}">E${i + 1}</span>`).join('')}</div>
+  <div class="actions"><span class="act">${I.back}Back to seasons</span></div>`)),
+  'Series · episodes', 'The E1…E10 grid is kept. The last‑watched episode can be highlighted in amber.'));
+D.push(fig(phone(bgGrid + sheet(sh('Neon Drift', '2024  •  Movie') +
+  `<div class="listlabel">Choose playback quality</div><p class="msg">Quality and size are reported by the source. Actual playback depends on the mirror and device.</p>
+  <div class="list">${[['4K', 'Neon.Drift.2024.2160p.WEB-DL · 14.2 GB'], ['1080p', 'Neon.Drift.2024.1080p.BluRay · 2.4 GB'], ['720p', 'Neon.Drift.2024.720p.WEB · 1.1 GB'], ['480p', 'Neon.Drift.2024.480p · 620 MB']].map(([q, l]) => `<div class="li stream"><span class="lbl"><span class="qtag">${q}</span>${l}</span><span class="chev">${I.chev}</span></div>`).join('')}</div>
+  <div class="actions"><span class="act">${I.back}Back</span></div>`)),
+  'Choose stream', 'Each stream is a list row with a quality tag. The note from the source is kept.'));
+D.push(fig(phone(bgGrid + sheet(sh('Neon Drift', '2024  •  Movie') +
+  `<div class="loading" style="flex-direction:column;gap:10px;padding:26px 0 10px"><span style="color:#ff6961">${I.alert}</span>Stream is unavailable</div>
+  <div class="actions"><span class="act">Back</span><span class="act primary">Retry</span></div>`)),
+  'Stream error', 'Error text with Back and Retry.'));
+document.getElementById('details').innerHTML = D.join('');
+
+/* ---------- 4 · sheets ---------- */
+const lead = (ic, c) => `<span class="lead" style="background:${c}">${ic}</span>`;
+const row = (label, o = {}) => `<div class="li ${o.cls || ''}">${o.lead || ''}<span class="lbl">${label}${o.sub ? `<small>${o.sub}</small>` : ''}</span>${o.val ? `<span class="val">${o.val}</span>` : ''}${o.check ? `<span class="check">${I.check}</span>` : ''}${o.chev ? `<span class="chev">${I.chev}</span>` : ''}${o.toggle != null ? `<span class="toggle ${o.toggle ? '' : 'off'}"></span>` : ''}</div>`;
+const H = [];
+H.push(fig(phone(bgGrid + sheet(sh('Movies') + `<div class="list">
+  ${row('Refresh', { lead: lead(I.refresh, '#0a84ff') })}
+  ${row('Movie sources', { lead: lead(I.source, '#5e5ce6'), chev: 1 })}
+  ${row('Save favorite', { lead: lead(I.star, '#ff9f0a'), sub: 'Neon Drift' })}</div>
+  <div class="actions"><span class="act">Close</span></div>`)),
+  'Options (⋯)', 'Refresh, Movie sources and Save/Remove favorite. On Continue Watching it also shows "Remove from Continue".'));
+H.push(fig(phone(bgGrid + sheet(sh('Filter loaded results') + `<div class="list">
+  ${row('Year', { val: '2024', chev: 1 })}${row('Language', { val: 'Hindi', chev: 1 })}${row('Genre', { val: 'All', chev: 1 })}${row('Sort', { val: 'Newest first', chev: 1 })}</div>
+  <div class="list" style="margin-top:12px">${row('Clear filters', { cls: 'danger' })}</div>`)),
+  'Filters', 'Year, Language, Genre and Sort show their current value on the right, the way iOS Settings does.'));
+H.push(fig(phone(bgGrid + sheet(sh('Sort') + `<div class="list">
+  ${row('Recommended')}${row('Newest first', { cls: 'sel', check: 1 })}${row('Title A–Z')}</div>
+  <div class="actions"><span class="act">${I.back}Back</span></div>`)),
+  'Filter value picker', 'The selected value gets an amber checkmark.'));
+H.push(fig(phone(topBar('Live TV', { filters: 1 }) + grid(chans.slice(0, 12).map(([n, g]) => channel(n, g)), 140) + sheet(sh('Channel groups') + `<div class="list">
+  ${row('All groups')}${row('BEN')}${row('ENG')}${row('HIN', { cls: 'sel', check: 1 })}${row('KAN')}${row('MAR')}${row('TAM')}</div>`)),
+  'Channel groups', 'The selected group is checked.'));
+H.push(fig(phone(bgGrid + sheet(sh('Movie sources') + `<p class="msg">All sources combines MovieBox and the shared Cinemeta catalog into one list. Matching titles share a card and their stream choices. 4KHDHub and HDHub4u use Flix for streams.</p><div class="list">
+  ${row('All sources', { cls: 'sel', check: 1 })}${row('MovieBox')}${row('4KHDHub · via Flix')}${row('HDHub4u · via Flix')}</div>
+  <div class="list" style="margin-top:12px">${row('Add custom streaming add-on', { lead: lead(I.plus, '#30d158') })}${row('Remove custom source', { cls: 'danger' })}</div>`)),
+  'Movie sources', 'Sources are listed first, then Add and Remove in their own group.'));
+H.push(fig(phone(bgGrid + sheet(sh('Add movie source') + `<p class="msg">Paste a configured streaming add-on URL. Supports IMDb movie/episode IDs and direct HTTPS video links.</p>
+  <div class="field err">http://example.com/addon</div><div class="errtext">Use an HTTPS URL ending in /manifest.json</div>
+  <div class="actions"><span class="act">Cancel</span><span class="act primary">Add</span></div>`)),
+  'Add source (URL input)', 'The same layout is used for "Add TV playlist" with an Import button.'));
+H.push(fig(phone(topBar('Downloads') + grid([poster('Neon Drift', { info: 'Downloaded' }), poster('Severance', { info: 'Downloading · 64%', progress: 64 }), poster('Monsoon Road', { info: 'Paused', progress: 22 })], 140) + sheet(sh('Download quality', 'Neon Drift') + `<p class="msg">Choose a quality to start downloading. Only available qualities are shown.</p><div class="list">
+  ${row('4K UHD · 2160p', { chev: 1 })}${row('Full HD · 1080p', { chev: 1 })}${row('HD · 720p', { chev: 1 })}${row('SD · 480p', { chev: 1 })}</div>
+  <div class="actions"><span class="act">Cancel</span></div>`)),
+  'Download quality', 'Covers the quality list, "Choose file", "Checking download qualities…" and "Download unavailable".'));
+H.push(fig(phone(topBar('Downloads') + grid([poster('Neon Drift', { info: 'Downloaded' }), poster('Severance', { info: 'Downloading · 64%', progress: 64 }), poster('Monsoon Road', { info: 'Paused', progress: 22 })], 140) + sheet(sh('Severance · S2 E4', 'Downloading · 64% · 812 MB of 1.3 GB') +
+  `<div class="center-dialog" style="position:static;transform:none;padding:0;text-align:left"><div class="bar" style="margin:0 0 4px"><i style="width:64%"></i></div></div>
+  <div class="actions"><span class="act">Close</span><span class="act" style="color:#ff6961">${I.trash}Remove</span><span class="act primary">${I.pauseSm}Pause</span></div>`)),
+  'Download actions', 'Close, Remove, and one main action that changes with state: Play offline, Resume or Pause.'));
+document.getElementById('sheets').innerHTML = H.join('');
+
+/* ---------- 5 · settings ---------- */
+const T = [];
+T.push(fig(phone(topBar('Favorites') + grid(movies.slice(0, 6).map(([t, y]) => poster(t, { info: y })), 168) + tabbar('Settings') +
+  `<div class="dim"></div><div class="sheet glass thick" style="top:60px"><div class="grab"></div>${sh('Settings')}
+  <div class="list">${row('App update', { lead: lead(I.update, '#30d158'), chev: 1 })}</div>
+  <div class="listlabel">Content</div><div class="list">
+  ${row('Movie sources', { lead: lead(I.source, '#5e5ce6'), val: 'All sources', chev: 1 })}
+  ${row('Add / replace TV playlist', { lead: lead(I.playlist, '#0a84ff'), chev: 1 })}
+  ${row('Use saved Indian channels (PureIPTV)', { lead: lead(I.flag, '#ff9f0a') })}
+  ${row('Use demo sources', { lead: lead(I.demo, '#64d2ff') })}</div>
+  <div class="listlabel">Playback &amp; display</div><div class="list">
+  ${row('Playback quality', { lead: lead(I.quality, '#ff375f'), val: 'Balanced', chev: 1 })}
+  ${row('Layout', { lead: lead(I.layout, '#8e8e93'), val: 'Automatic', chev: 1 })}</div>
+  <div class="listlabel">Home screen widget</div><div class="list">
+  ${row('Add animated widget', { lead: lead(I.widget, '#ff9f0a') })}
+  ${row('Widget appearance', { lead: lead(I.brush, '#bf5af2'), chev: 1 })}</div>
+  <div class="list" style="margin-top:12px">${row('About &amp; licenses', { lead: lead(I.info, '#636366'), chev: 1 })}</div>
+  </div>`),
+  'Settings', 'All the same items, grouped into sections with coloured icons like iOS Settings. Current values show on the right.'));
+T.push(fig(phone(topBar('Favorites') + grid(movies.slice(0, 9).map(([t, y]) => poster(t, { info: y })), 168) + sheet(sh('Playback quality') + `<div class="list">
+  ${row('Data saver', { sub: 'up to 480p' })}${row('Balanced', { sub: 'up to 720p', cls: 'sel', check: 1 })}${row('Best available', { sub: 'auto' })}${row('Full HD', { sub: 'up to 1080p' })}${row('4K UHD', { sub: 'up to 2160p' })}</div>
+  <div class="actions"><span class="act">${I.back}Back</span></div>`)),
+  'Playback quality', 'The Layout picker (Automatic, Phone, TV) uses the same checkmark list.'));
+T.push(fig(phone(topBar('Favorites') + grid(movies.slice(0, 9).map(([t, y]) => poster(t, { info: y })), 168) +
+  `<div class="dim"></div><div class="center-dialog glass thick"><div class="badge" style="background:linear-gradient(145deg,#30d158,#0a8f3a)">${I.update}</div>
+  <h3>App update · 1.4.0</h3><p>A new version of SuperFire TV is ready. Downloading update · 46%<br>The download continues in the background.</p>
+  <div class="bar"><i></i></div><div class="actions"><span class="act">Close</span><span class="act" style="color:#ff6961">Cancel download</span></div></div>`),
+  'App update', 'Covers "Download update", download progress and "Allow app updates".'));
+T.push(fig(phone(`<div class="wpage">
+  <div class="whead"><h3>Widget appearance</h3><span class="pillbtn glass">Cancel</span></div>
+  <p style="font-size:12px;color:var(--muted);margin-top:4px">Changes apply only to this widget.</p>
+  <div class="preview"><small>LIVE PREVIEW</small><div class="wid glass"><span class="app-icon"></span></div></div>
+  <div class="listlabel">Background</div><div class="list styleseg"><span>Solid color</span><span>Adaptive</span><span>Transparent</span><span class="on">Soft glass</span></div>
+  <div class="listlabel">Look</div><div class="list">
+    <div class="slider"><div class="row">Corner radius<span>22 dp</span></div><div class="rail"><i style="width:78%"></i><b style="left:78%"></b></div></div>
+    <div class="slider" style="border-top:.5px solid rgba(255,255,255,.09)"><div class="row">Mobile icon size<span>100%</span></div><div class="rail"><i style="width:43%"></i><b style="left:43%"></b></div></div>
+    <div class="slider" style="border-top:.5px solid rgba(255,255,255,.09)"><div class="row">Glow strength<span>60%</span></div><div class="rail"><i style="width:60%"></i><b style="left:60%"></b></div></div>
+  </div>
+  <div class="list" style="margin-top:12px">${row('Animate flame', { toggle: 1 })}</div>
+  </div><div class="savebar" style="left:14px;right:14px">Save widget</div>`),
+  'Widget appearance', 'Style, colour, opacity, radius, sizes, animation, speed, glow, Reset and Save stay. Only part of the page is shown here.'));
+document.getElementById('settings').innerHTML = T.join('');
+
+/* ---------- 6 · player ---------- */
+const P = [];
+const pTop = (live) => `<div class="pshade-t"></div><div class="pshade-b"></div>
+  <div class="ptop">
+    <div class="ibtn glass">${I.back}</div>
+    <div class="ptitle"><h3>${live ? 'Star Plus HD' : 'Severance · S2 E4 · Woe’s Hollow'}</h3><p>${live ? 'HIN · TV channel' : '2022 · Series'}</p></div>
+    <span class="pstatus glass"><i></i>${live ? 'Playing' : 'Auto · 1080p'}</span>
+    <div class="pgroup glass">${live ? '' : `<div class="ibtn">${I.downloads}</div>`}<div class="ibtn">${I.aspect}</div><div class="ibtn">${I.settings}</div></div>
+  </div>`;
+P.push(fig(phone(`<div class="video"></div>` + pTop(false) +
+  `<div class="level glass" style="left:22px"><svg viewBox="0 0 24 24" style="display:none"></svg>${I.sun}<div class="track"><i style="height:64%"></i></div></div>
+  <div class="level glass" style="right:22px">${I.vol}<div class="track"><i style="height:48%"></i></div></div>
+  <div class="pbottom glass">
+    <div class="pplay">${I.pause.replace('<svg', '<svg style="stroke:#000;fill:none"')}</div>
+    <div class="skip">${I.rewind}<em>10</em></div><div class="skip">${I.forward}<em>10</em></div>
+    <div class="timeline"><div class="buf"></div><div class="pos"></div><div class="thumb"></div></div>
+    <span class="ptime">18:42 / 49:10</span>
+    <span class="pnext">${I.next}Next episode</span>
+  </div>`, 'land'),
+  'Player · series', 'Top: Back, title, status, then Download, Aspect and Settings grouped in one pill. Bottom: Play, −10 s, +10 s, timeline, time and Next episode in one glass bar. Brightness and volume indicators stay.'));
+P.push(fig(phone(`<div class="video" style="filter:hue-rotate(160deg)"></div>` + pTop(true) +
+  `<div class="pbottom glass">
+    <div class="pplay">${I.pause.replace('<svg', '<svg style="stroke:#000;fill:none"')}</div>
+    <div class="skip" style="opacity:.35">${I.rewind}<em>10</em></div><div class="skip" style="opacity:.35">${I.forward}<em>10</em></div>
+    <div class="timeline"><div class="pos" style="width:100%;background:#ff3b30"></div></div>
+    <span class="livebadge">LIVE</span>
+  </div>`, 'land'),
+  'Player · live TV', 'Download is hidden and the seek buttons are dimmed when the stream can’t seek. The timeline turns into a LIVE badge.'));
+P.push(fig(phone(`<div class="video"></div><div class="dim" style="background:rgba(0,0,0,.3)"></div>
+  <div class="psheet glass thick">${sh('Playback settings')}<div class="list">
+    ${row('Audio &amp; subtitles', { lead: lead(I.cc, '#0a84ff'), chev: 1 })}
+    ${row('Video quality', { lead: lead(I.quality, '#ff375f'), val: 'Auto', chev: 1 })}
+    ${row('Playback speed', { lead: lead(I.speed, '#ff9f0a'), val: '1×', chev: 1 })}
+    ${row('Retry stream', { lead: lead(I.refresh, '#30d158') })}
+    ${row('Auto next episode', { lead: lead(I.auto, '#5e5ce6'), toggle: 1 })}
+    ${row('Touch controls', { lead: lead(I.touch, '#8e8e93'), chev: 1 })}</div></div>`, 'land'),
+  'Player · settings sheet', 'In landscape the sheet slides in from the side, so the video stays visible. Aspect ratio, speed, tracks, quality and episode pickers use the same sheet.'));
+P.push(fig(phone(`<div class="video"></div><div class="dim" style="background:rgba(0,0,0,.45)"></div>
+  <div class="center-dialog glass thick" style="left:50%;right:auto;width:400px;transform:translate(-50%,-50%)">
+  <h3>Up next</h3><p style="font-size:15px;color:var(--text);margin-top:10px">Season 2, episode 5 starts in 8 seconds</p>
+  <div class="bar"><i style="width:60%"></i></div>
+  <div class="actions"><span class="act">Stay here</span><span class="act primary">${I.play}Play now</span></div></div>`, 'land'),
+  'Player · next episode', 'The countdown, Stay here and Play now are kept, with a progress bar added for the countdown.'));
+document.getElementById('player').innerHTML = P.join('');
+const only = new URLSearchParams(location.search).get("only");
+if (only) document.querySelectorAll("section, header.page").forEach(s => { if (!s.querySelector("#" + only)) s.style.display = "none"; });
+</script>
+</body>
+</html>
